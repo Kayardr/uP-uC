@@ -18,15 +18,13 @@
 	  guess    	DB  5 dup(0)
 
 .code
-             org 100h
+            org 100h
 	
 ;*************************************************************
 ;  Procedimiento principal
 ;*************************************************************	
 	principal proc
             mov sp,0fffh	; inicializa SP (Stack Pointer)
-			mov ax,@data  	; inicializar DS al la direccion
-			mov ds,ax    	; del segmento de datos (.DATA)
 			
 		@@sigue:
 			mov si, offset secrete 
@@ -53,22 +51,17 @@
 			call printHint
 			mov dx, offset new_line
 			call puts
-			cmp al, 4
-			jae @@msgWin
-			loop @@nextGuess
+			cmp al, 4					;Compara si los cuatro numeros son "BULL"
+			jae @@msgWin 				;Si es asi, salta al mensaje de victoria
+			loop @@nextGuess 			;Si no, comprueba que no se hayan terminado los intentos
 
-			mov dx, offset msgLoose
-			call puts
+			mov dx, offset msgLoose 	;Si ya no hay intentos
+			call puts 					;Se despliega el mensaje de derrota
 			jmp @@sigue
 
 			@@msgWin:
 			mov dx, offset msgWin
 			call puts
-
-		; Add the following conditions:
-		; 	The "game" end when Bulls equals 4 (You win)
-		; 	or the number of guesses is greater then 8
-		
 		
 			jmp @@sigue
 			
@@ -180,49 +173,49 @@
 			push bx
 			push cx
 			push dx
-			;mov ah,2 	;remove this
-			;mov al,2	;remove this
+			
 			mov ax, 0
 			mov cx, 0
 			
-			mov bx, si
+			mov bx, si					;Asignamos a bx la direccion de los digitos a adivinar
 		@@ndigit:
-			mov dl, [bx]
-			push bx
+			mov dl, [bx]				;Leemos el primer digito
+			push bx						;Salvamos la posicion de los digitos a adivinar
 
-			mov bx, di
-			mov ch, 0
+			mov bx, di					;Asignamos a bx la direccion de los digitos de intento
+			mov ch, 0					;Reestablecemos ch a 0 cada que comparemos los digitos
+										;	"Es el contador de los digitos adivinados"
 		@@cmpdigit:
-				mov dh, [bx]
+				mov dh, [bx]			;Leemos el digito adivinado
 
-				cmp dl, dh
-				ja @@noeq
-				jb @@noeq
-				cmp cl, ch
-				ja @@cow
-				jb @@cow
-				inc al
+				cmp dl, dh				;Comparamos los digitos
+				ja @@noeq				;	Si son iguales no saltamos
+				jb @@noeq				;	Si no lo son saltamos
+				cmp cl, ch				;Se compara si estan en la misma posicion
+				ja @@cow				;	Si lo estan no saltamos
+				jb @@cow				;	Si no, saltamos y asignamos a @@Cow
+				inc al					;Si no saltamos incrementamos "Bulls"
 				jmp @@endcmp
-				@@cow:
-				inc ah
+				@@cow:			
+				inc ah					;Si saltamos incrementamos "Cows"
 				jmp @@endcmp
 
 				@@noeq:
-				inc bx
-				inc ch
-				cmp ch, 4
-				jb @@cmpdigit
+				inc bx					;Se pasa al siguiente digito
+				inc ch					;Se incrementa el contador de digitos
+				cmp ch, 4				;Se compara la cantidad de digitos leidos con 4
+				jb @@cmpdigit			;Si se han leido 4 se termina el ciclo
 			@@endcmp:
-			pop bx
-			inc bx
-			inc cl
-			cmp cl, 4
-			jb @@ndigit
+			pop bx						;Se recupera bx
+			inc bx						;Se lee el siguiente digito original
+			inc cl						;Se incrementa su contador
+			cmp cl, 4					;Se compara si la cantidad de digitos leidos es menos a 4
+			jb @@ndigit					; de no ser asi se termina el ciclo
 
-			pop dx
+			pop dx						
 			pop cx
 			pop bx
-			ret
+			ret 						;Se retorna AX donde AL=Bulls y AH=Cows
 			endp
 						
 end   principal              ; End of program 
