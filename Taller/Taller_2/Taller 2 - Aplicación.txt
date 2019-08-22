@@ -1,0 +1,16 @@
+Taller 2 - Aplicación
+
+Analizar, diseñar e implementar programa para simular un Tamagotchi (mascota virtual) básico según funcionalidades descritas a continuación.
+
+La idea principal es que el usuario debe mantener vivo a la mascota virtual atendiendo algunas necesidades básicas como lo es alimentarla, jugar, bañarla y mantenerla sana. La mascota virtual inicia con esas necesidades ya satisfechas al 100% pero éstas van disminuyendo a un determinado ritmo según pasa el tiempo. Por tanto el usuario debería atender a la mascota con el fin de mantener dichas necesidades en niveles aceptables para que la mascota  permanezca viva.
+
+Descripción de frecuencias de necesidades y atenciones de la mascota virtual.
+Salud: Disminuye 5% cada minuto y se recuperar aplicando medicamento presionando la tecla M que aumenta en 5% cada vez que se presiona. Está necesidad activa su respectiva alarma cuando el nivel es igual o menor a 60%.
+Alimentación: Disminuye 3% cada minuto y se recupera proporcionando alimental al presionar la tecla F que aumenta en 10% cada vez que se presiona. Está necesidad activa su respectiva alarma cuando el nivel es igual o menor a 60%.
+Entretenimiento:  Disminuye 5% cada minuto y se recupera jugando con la mascota al presionar la tecla P que aumenta en 5% cada vez que se presiona. Está necesidad activa su respectiva alarma cuando el nivel es igual o menor a 50%.
+Limpieza: Disminuye 5% cada 30 segundos y se recupera bañado a la mascota al presionar la tecla B que hace recupera al 100% son solo presionar una vez. Está necesidad activa su respectiva alarma cuando el nivel es igual o menor a 30%.
+El aplicar determinada atención a la mascota aumente el nivel de satisfacción de su correspondiente necesidad y puede lograrse llegar al nivel del 100% pero no puede sobre pasar dicho nivel.  Si en cualquier momento se presiona la tecla S se presentan los niveles actuales de todas las necesidades. 
+
+Las necesidades han sido descritas en orden de prioridad de atención, en este caso por ejemplo es de mayor prioridad la Salud de la mascota que su Limpieza. 
+
+Realice las pruebas necesarias para verificar que el software desarrollado cumple con las funcionalidades requeridas.
