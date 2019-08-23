@@ -75,15 +75,29 @@ int alarm(stats *stat, int min){
 	return 0;
 }
 
+void print_stats(int count, char tag){
+	printf("%c", tag);
+	printf("|");
+	for(int i = 0 ; i < (int)count/10 ; i++){
+		printf("*");
+	}
+	for(int i = 0; i < (int)(100-count)/10; i++){
+		printf(" ");
+	}
+	printf("|%d\n", count);
+
+}
+
 int main(void){
 	pet m_pet;
 	char command[20];
 	int dead = 0;
+	int show = -1;
 	strcpy(command, "cls");
 	time_t last = time(NULL);
 	unsigned int s_elapsed = 0;
-	initialization(&m_pet.healt, 1, 60, 20);
-	initialization(&m_pet.feeding, 1, 60, 60);
+	initialization(&m_pet.healt, 50, 60, 60);
+	initialization(&m_pet.feeding, 100, 60, 60);
 	initialization(&m_pet.entertain, 100, 50, 60);
 	initialization(&m_pet.cleaning, 100, 30, 30);
 	char c;
@@ -91,7 +105,12 @@ int main(void){
 		if(dead!=1){
 			if(kbhit()){
 				c = getch();
-				interact(&m_pet, c);
+				if(c!='s'){
+					interact(&m_pet, c);
+				}
+				else{
+					show = show*-1;
+				}
 			}
 
 			if((time(NULL)-last)>=1){
@@ -105,19 +124,109 @@ int main(void){
 					dead = 1;
 
 				printf("%d\n", ++s_elapsed);
-				printf("H = %i\t", m_pet.healt.current);
-				printf("F = %i\t", m_pet.feeding.current);
-				printf("E = %i\t", m_pet.entertain.current);
-				printf("C = %i\t\n", m_pet.cleaning.current);
 
-				if(alarm(&m_pet.healt, 60) == 1)
+				if(show==1){
+					print_stats(m_pet.healt.current, 'H');
+					print_stats(m_pet.feeding.current, 'F');
+					print_stats(m_pet.entertain.current, 'P');
+					print_stats(m_pet.cleaning.current, 'C');	
+				}
+				
+
+				if(alarm(&m_pet.healt, 60) == 1){
 					printf("HELP MEEEE!\n");
-				else if(alarm(&m_pet.feeding, 60) == 1)
+					printf("\n\n\n\n\n");
+					printf("           ########\n");
+					printf("        ###        ###\n");
+					printf("     ###              ###\n");
+					printf("   ##                    ##\n");
+					printf("  #                        #\n");
+					printf(" #        XX      XX        #\n");
+					printf(" #        XX      XX        #\n");
+					printf(" #                          #\n");
+					printf(" #                          #\n");
+					printf(" #                          #\n");
+					printf("  #                        #\n");
+					printf("   ##        ####        ##\n");
+					printf("     ###              ###\n");
+					printf("        ###        ###\n");
+					printf("           ########\n");
+				}
+				else if(alarm(&m_pet.feeding, 60) == 1){
 					printf("IM HUNGRY\n");
-				else if(alarm(&m_pet.entertain, 50) == 1)
+					printf("\n\n\n\n\n");
+					printf("           ########\n");
+					printf("        ###        ###\n");
+					printf("     ###              ###\n");
+					printf("   ##                    ##\n");
+					printf("  #       @@      @@       #\n");
+					printf(" #       @@@@    @@@@       #\n");
+					printf(" #       @@@@    @@@@       #\n");
+					printf(" #        @@      @@        #\n");
+					printf(" #                          #\n");
+					printf(" #                ***       #\n");
+					printf("  #        #     ****      #\n");
+					printf("   ##       #######      ##\n");
+					printf("     ###              ###\n");
+					printf("        ###        ###\n");
+					printf("           ########\n");
+				}
+				else if(alarm(&m_pet.entertain, 50) == 1){
 					printf("IM BORED\n");
-				else if(alarm(&m_pet.cleaning, 30) == 1)
+					printf("\n\n\n\n\n");
+					printf("           ########\n");
+					printf("        ###        ###\n");
+					printf("     ###              ###\n");
+					printf("   ##                    ##\n");
+					printf("  #       @@      @@       #\n");
+					printf(" #       @@@@    @@@@       #\n");
+					printf(" #       @@@@    @@@@       #\n");
+					printf(" #        @@      @@        #\n");
+					printf(" #                          #\n");
+					printf(" #           ####           #\n");
+					printf("  #        ##    ##        #\n");
+					printf("   ##                   ##\n");
+					printf("     ###              ###\n");
+					printf("        ###        ###\n");
+					printf("           ########\n");
+				}
+				else if(alarm(&m_pet.cleaning, 30) == 1){
 					printf("IM DIRTY\n");
+
+					printf("\n\n\n\n\n");
+					printf("    $$    $########         $$   \n");
+					printf("    $   ###        ###     $$$   \n");
+					printf(" $   ###              ###   $$   \n");
+					printf("  $##                    ##  $   \n");
+					printf("  #  ;    @@      @@       #\n");
+					printf(" #       @@@@    @@@@       #\n");
+					printf(" #       @@@@    @@@@       #\n");
+					printf(" #  ;;    @@      @@    ;;  #\n");
+					printf(" #   ;;                     #\n");
+					printf(" #                     ;    #\n");
+					printf("  #        ########        #\n");
+					printf("   ##                    ##\n");
+					printf("     ###              ###\n");
+					printf("        ###        ###\n");
+					printf("           ########\n");
+				}else{
+					printf("\n\n\n\n\n");
+					printf("           ########\n");
+					printf("        ###        ###\n");
+					printf("     ###              ###\n");
+					printf("   ##                    ##\n");
+					printf("  #       @@      @@       #\n");
+					printf(" #       @@@@    @@@@       #\n");
+					printf(" #       @@@@    @@@@       #\n");
+					printf(" #        @@      @@        #\n");
+					printf(" #                          #\n");
+					printf(" #       ############       #\n");
+					printf("  #        ########        #\n");
+					printf("   ##        ####        ##\n");
+					printf("     ###              ###\n");
+					printf("        ###        ###\n");
+					printf("           ########\n");
+				}
 			}	
 		}
 		else{
