@@ -8,19 +8,19 @@ unsigned int atoi(char *str);
 extern char getchar( void );
 void printdec(unsigned char dato);
 
-char msg[]="Hola UABC\r\n";
+char jmp[]="\r\n";
 unsigned char i=0;
+char str[20];
 
+char a[] = "48";
+unsigned int b;
 int main ( void ){
-	unsigned int number = 5;
-	unsigned int base = 2;
-	char str[20];
 	while(1){
-		printdec(i++);
-		puts( msg );
-		itoa(number, str, base);
+		gets(str);
+		b = atoi(str);
+		itoa(b, str, 10);
 		puts(str);
-		getchar();
+		puts(jmp);
 	}
 	return 0;
 }
@@ -35,22 +35,41 @@ void printdec ( unsigned char dato ){
 	putchar( dato/100 + 0x30 );
 	dato%=100;
 	putchar( dato/10 + 0x30 );
-	putchar( dato%10 + 0x30 );
+	putchar( dato%10 + 0x30 ); 
 }
 
 void itoa(unsigned int number, char* str, unsigned char base){
+	char aux[20];
+	int i=0;
 	do{
-		*str++ = (number % base) + 30;
-		putchar(*str);
-	}while(number/base > base);
+		*(aux + i++) = (number % base) > 9 ? (number % base) + 55 : (number % base) + '0';
+		number = number/base;
+	}while(number > 0);
+	while(i>0){
+		*(str++) = *(aux + (--i));
+	}
+	*(str) = 0;
+}
+
+void gets(char *str){
+	do{
+		*str = getchar();
+	}while(*(str++) != '\r');
+	*str = 0;
 }
 
 /*void itor(unsigned int number, char* str){
-
+	
 }*/
 
 unsigned int atoi(char *str){
-	unsigned int i=0;
-	while(*str == 0)
-		i = i * 10 + (*str++) - 30;
+	if(*str){
+		unsigned int count = 0;
+		while(*str>'0' || *str<'9' || *str!=0){
+			count = count*10+(*(str++))-'0';
+		}
+		return count;
+	}
+	return 0;
+	
 }

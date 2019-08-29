@@ -18,7 +18,6 @@
 		mov ah, 08h
 		int 21h
 		mov ah, 0
-		pop bp
 		ret
 	_getchar endp
 
