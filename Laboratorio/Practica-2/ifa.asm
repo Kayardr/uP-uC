@@ -15,7 +15,7 @@
 ;	Funciones
 ;====================================================
 	_getchar proc
-		mov ah, 08h
+		mov ah, 01h
 		int 21h
 		mov ah, 0
 		ret
