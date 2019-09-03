@@ -15,9 +15,11 @@
 ;	Funciones
 ;====================================================
 	_getchar proc
+		push bp
+		mov bp, sp
 		mov ah, 01h
 		int 21h
-		mov ah, 0
+		pop bp
 		ret
 	_getchar endp
 

@@ -8,19 +8,20 @@ unsigned int atoi(char *str);
 extern char getchar( void );
 void printdec(unsigned char dato);
 
-
-int div[] = {50000, 40000, 10000, 9000,5000,4000, 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-char* roman[] = {"(L)","(X)(L)", "(X)", "(I)(X)", "(V)", "(I)(V)","(I)", "C(I)", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+char* romanb[] = {"(L)", "(X)(L)", "(X)", "(I)(X)", "(V)", "(I)(V)", "(I)", "C(I)", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+int div[] = {50000, 40000, 10000, 9000, 5000, 4000, 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 
 char jmp[]="\r\n";
 char str[20];
-char strb[20];
 
 char in[] = "Input: ";
 char hex[] = "Hex: ";
 char bin[] = "Bin: ";
 char rom[] = "Roman: ";
 unsigned int b;
+
+char c;
+
 int main ( void ){
 	while(1){
 		puts(in);
@@ -39,8 +40,8 @@ int main ( void ){
 		puts(jmp);
 
 		puts(rom);
-		itor(b, strb);
-		puts(strb);
+		itor(b, str);
+		puts(str);
 		puts(jmp);
 		puts(jmp);
 	}
@@ -73,56 +74,64 @@ void itoa(unsigned int number, char* str, unsigned char base){
 	*(str) = 0;
 }
 
-void gets(char *str){
-	char aux;
-	int i=0;
-	while((aux=getchar()) !='\r'){
-		if(aux==8){
-			if(i>0){
-				putchar(' ');
-				putchar(8);
-				*str--;
-				i--;
-			}
-		}
-		else{
-			*str++=aux;
-			i++;
-		}
-	}
-	*str=0;
-	putchar('\'');
-	puts(str-i);
-	putchar('\'');
+void gets(char *str){	
 	/*do{
 		*str = getchar();
-	}while(*(str++) != '\r');
+		if(0){
+			*str--;
+			*str--;
+			putchar(8);
+			putchar('\0');
+			putchar(8);
+		}
+		else{
+			
+		}
+
+	}while(*str++ !='\r');
 	*str = 0;*/
+	const char *const aux = str;
+
+	c = getchar();
+	while((c!=13)){
+		if(c==8){
+			if(str!=aux){
+				putchar(' ');
+				putchar(c);
+				str--;
+			}
+			else
+				putchar(' ');
+		}
+		else if(str >= aux+20-1){
+			putchar(8);
+			putchar(' ');
+			putchar(8);
+		}
+		else
+			*(str++)=c;
+		c=getchar();
+	}
+	*(str) = '\0';
 }
 
 void itor(unsigned int number, char* str){
-	
-	int i = 0;
-	int j;
-	itoa(number, str, 10);
-	puts(str);
-	puts(jmp);
-	if(number==0){
+	k = 0;
+	if(number<1){
 		*str++ = 'n';
 		*str = 0;
 	}
 	else{
 		while(number){
-			while(number/div[i]){
-				for(j=0; roman[i][j]!=0; j++)
-					*str++ = roman[i][j];
-				number -= div[i];
+			while(number/div[k]){
+				for(l = 0; romanb[k][l]!=0; l++)
+					*(str++) = romanb[k][l];
+				number -= div[k];
 			}
-			i++;
+			k++;
 		}
-		*str = '\0';	
+		*str = 0;	
 	}
-	
 }
 
 unsigned int atoi(char *str){
@@ -134,5 +143,4 @@ unsigned int atoi(char *str){
 		return count;
 	}
 	return 0;
-	
 }
