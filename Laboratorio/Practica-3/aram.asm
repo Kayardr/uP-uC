@@ -16,36 +16,30 @@
 ;====================================================
 ;	Funciones
 ;====================================================
-	_peek proc
+	_peek proc				;Get data on memory
 		push bp
-		push ds
-
 		mov bp, sp
 		
-		mov ds, [bp+4]
-		mov bx, [bp+8]
-		mov ax, [bx]
+		mov bx, [bp+6]		;offset
+		push ds
+		mov ds, [bp+4]		;data segment
+		mov al, [bx]		;data out
 		
 		pop ds
 		pop bp
 		ret
 	endp
 
-	_poke proc
+	_poke proc				;Put data in memory
 		push bp
-		push ds
-		push bx
-		push ax
 		mov bp, sp
+		
+		mov bx, [bp+6]		;offset
+		push ds
+		mov ds, [bp+4]		;data segment
+		mov dl, [bp+8]		;data in
+		mov [bx], dl		;in the ds*10h+bx put the data in
 
-		mov ds, [bp+4]
-		mov bx, [bp+8]
-		mov ax, [bp+12]
-
-		mov [bx], ax
-
-		pop ax
-		pop bx
 		pop ds
 		pop bp
 		ret

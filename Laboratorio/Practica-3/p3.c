@@ -5,8 +5,10 @@ extern unsigned char getchar( void );
 
 void main(){
 	unsigned char a;
-	a = getchar();
+	unsigned char b;
+	getchar();
+	a = 'a';
 	poke(200, 200, a);
-	a = peek(200, 200);
-	
+	b = peek(200, 200);
+	putchar(b);
 }
