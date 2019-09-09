@@ -22,7 +22,7 @@
 		
 		mov bx, [bp+6]		;offset
 		push ds
-		mov ds, [bp+4]		;data segment
+		mov ds, [bp+4]		;data segment 2+2, por push e IP(se introduce automaticamente)
 		mov al, [bx]		;data out
 		
 		pop ds
