@@ -14,32 +14,29 @@ int div[] = {50000, 40000, 10000, 9000, 5000, 4000, 1000, 900, 500, 400, 100, 90
 char jmp[]="\r\n";
 char str[20];
 
-char in[] = "Input: ";
-char hex[] = "Hex: ";
-char bin[] = "Bin: ";
-char rom[] = "Roman: ";
 unsigned int b;
 
 char c;
-
+int k;
+int l;
 int main ( void ){
 	while(1){
-		puts(in);
+		puts("Input: ");
 		gets(str);
 		b = atoi(str);
 		puts(jmp);
 
-		puts(hex);
+		puts("Hex: ");
 		itoa(b, str, 16);
 		puts(str);
 		puts(jmp);
 
-		puts(bin);
+		puts("Bin :");
 		itoa(b, str, 2);
 		puts(str);
 		puts(jmp);
 
-		puts(rom);
+		puts("Roman: ");
 		itor(b, str);
 		puts(str);
 		puts(jmp);
@@ -52,13 +49,6 @@ int main ( void ){
 void puts ( char *str ){
 	while( *str )
 		putchar( *str++ );
-}
-
-void printdec ( unsigned char dato ){
-	putchar( dato/100 + 0x30 );
-	dato%=100;
-	putchar( dato/10 + 0x30 );
-	putchar( dato%10 + 0x30 ); 
 }
 
 void itoa(unsigned int number, char* str, unsigned char base){
@@ -75,21 +65,6 @@ void itoa(unsigned int number, char* str, unsigned char base){
 }
 
 void gets(char *str){	
-	/*do{
-		*str = getchar();
-		if(0){
-			*str--;
-			*str--;
-			putchar(8);
-			putchar('\0');
-			putchar(8);
-		}
-		else{
-			
-		}
-
-	}while(*str++ !='\r');
-	*str = 0;*/
 	const char *const aux = str;
 
 	c = getchar();
@@ -113,11 +88,13 @@ void gets(char *str){
 		c=getchar();
 	}
 	*(str) = '\0';
+	/*while((*(str++)=getchar())!= 13);
+	*str = 0;*/
 }
 
 void itor(unsigned int number, char* str){
 	k = 0;
-	if(number<1){
+	if(number==0){
 		*str++ = 'n';
 		*str = 0;
 	}
@@ -125,7 +102,7 @@ void itor(unsigned int number, char* str){
 		while(number){
 			while(number/div[k]){
 				for(l = 0; romanb[k][l]!=0; l++)
-					*(str++) = romanb[k][l];
+					*str++ = romanb[k][l];
 				number -= div[k];
 			}
 			k++;
@@ -138,7 +115,7 @@ unsigned int atoi(char *str){
 	if(*str){
 		unsigned int count = 0;
 		while(*str>='0' && *str<='9'){
-			count = count*10+(*(str++))-'0';
+			count = (count*10)+((*(str++))-'0');
 		}
 		return count;
 	}
