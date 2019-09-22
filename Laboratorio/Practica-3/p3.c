@@ -11,6 +11,8 @@ void dataBusTest(unsigned int segment, unsigned int offset);
 void addressBusTest(unsigned int segment, unsigned int offset, unsigned int nBits);
 void printBin(unsigned char number);
 
+#define ALEN 0x7FF
+
 void main(){
 	unsigned char a;
 	unsigned char b;
@@ -20,7 +22,7 @@ void main(){
 	putchar(b);
 	getchar();
 	dataBusTest(0, 0x2200);
-	addressBusTest(0, 0x2200, 0x7FFF);
+	addressBusTest(0, 0x2200, 0x7FF);
 	getchar();
 }
 
@@ -52,34 +54,39 @@ void dataBusTest(unsigned int segment, unsigned int offset){
 
 /*Test para el bus de direcciones*/
 void addressBusTest(unsigned int segment, unsigned int offset, unsigned int nBits){
-	unsigned int addresMask = nBits/sizeof(unsigned int)-1;			
-	unsigned int offsetb;
-	unsigned int testOffset;
-	unsigned char pattern = 0x2A;
-	unsigned char antipattern = 0x15;
+	unsigned int displacement;
+	unsigned int aux_disp;
 	unsigned int bad_pins = 0;
-	for(offsetb = 1 ; (offsetb & addresMask)!= 0; offsetb<<=1)
-		poke(segment, offset+offsetb, pattern);
+	unsigned char data = 1;
+	for(displacement = 1; displacement < ALEN; displacement <<= 1)
+		poke(segment, offset+displacement, 0);
 	
-	testOffset = 0;
-	poke(segment, offset+offsetb, antipattern);
-	for(offsetb = 1; (offsetb & addresMask) != 0; offsetb <<= 1){
-		if(peek(segment, offset+offsetb) != pattern)
-			bad_pins = bad_pins | offsetb;
+	poke(segment, offset, 0x55);
+
+	for(displacement = 1; displacement < ALEN; displacement <<= 1){
+		if(peek(segment, offset+displacement)!=0)
+			bad_pins |= offset;
 	}
 
-	poke(segment, offset+offsetb, pattern);
-	for(testOffset = 1; (testOffset & addresMask) !=0; testOffset <<= 1){
-		poke(segment, offset+offsetb, antipattern);
-		if((peek(segment, offset+offsetb) != pattern)){
-			bad_pins = bad_pins | offsetb;		
+	for(displacement = 1; displacement < nBits; displacement <<= 1){
+		poke(segment, offset, 0xFF);
+		poke(segment, offset+displacement, data);
+
+		for(aux_disp = displacement; aux_disp < nBits; aux_disp <<= 1){
+			if(aux_disp != displacement){
+				if(data == peek(segment, offset+aux_disp))
+					bad_pins |= displacement;
+			}
 		}
-		for(offsetb = 1; (offsetb & addresMask) != 0; offsetb <<= 1){
-			if((peek(segment, offset+offsetb) != pattern) && (offsetb != testOffset))
-				bad_pins = bad_pins | offsetb;
-		}
-		poke(segment, offset+offsetb, pattern);
+
+		if(data != peek(segment, offset+displacement))
+			bad_pins |= displacement;
+
+		if(data == peek(segment, offset))
+			bad_pins |= displacement;
+		data++;
 	}
+
 	puts("\r\n");
 	printBin((unsigned char)(bad_pins >> 8));
 }
