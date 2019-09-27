@@ -1,9 +1,9 @@
 
  Start  Stop   Length Name               Class
 
- 00000H 00389H 0038AH _TEXT              CODE
- 0038AH 003ABH 00022H _DATA              DATA
- 003ACH 003ACH 00000H _BSS               BSS
+ 00000H 00307H 00308H _TEXT              CODE
+ 00308H 00339H 00032H _DATA              DATA
+ 0033AH 0033AH 00000H _BSS               BSS
 
 Program entry point at 0000:0000
 Warning: No stack

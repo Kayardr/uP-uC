@@ -26,12 +26,14 @@ void main(){
 	dataBusTest(0, 0x7800);
 	/*Prueba del bus de direcciones con direccion base 7800*/
 	addressBusTest(0, 0x7800, ALEN);
+	puts("\r\n");
 
 	puts("DIRECCION 2200h");
 	/*Prueba del bus de datos en la direccion 2200*/
 	dataBusTest(0, 0x2200);
 	/*Prueba del bus de direcciones con direccion base 2200*/
 	addressBusTest(0, 0x2200, ALEN);
+	puts("\r\n");
 	getchar();
 }
 
