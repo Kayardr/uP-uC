@@ -1,0 +1,30 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.14</VERSION>
+ <DEVICE>ATmega1280</DEVICE>
+ <WORKING_DIR>C:\Micros\uP-uC\Laboratorio\Practica-6</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\P6.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\Appnotes\m1280def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\Prac6.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\Prac6.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\Prac6.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <principal><FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\P6.asm</FILE><LINE>29</LINE></principal>
+  <res><FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\P6.asm</FILE><LINE>58</LINE></res>
+  <g><FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\P6.asm</FILE><LINE>49</LINE></g>
+  <end><FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\P6.asm</FILE><LINE>55</LINE></end>
+  <b><FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\P6.asm</FILE><LINE>70</LINE></b>
+  <ab><FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\P6.asm</FILE><LINE>68</LINE></ab>
+  <bb><FILE>C:\Micros\uP-uC\Laboratorio\Practica-6\P6.asm</FILE><LINE>80</LINE></bb>
+ </LABELS>
+</ASSEMBLER_INFO>

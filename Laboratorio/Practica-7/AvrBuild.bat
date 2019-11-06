@@ -1,0 +1,2 @@
+@ECHO OFF
+"C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\avrasm2.exe" -S "C:\Micros\uP-uC\Laboratorio\Practica-7\labels.tmp" -fI -W+ie -o "C:\Micros\uP-uC\Laboratorio\Practica-7\Delay.hex" -d "C:\Micros\uP-uC\Laboratorio\Practica-7\Delay.obj" -e "C:\Micros\uP-uC\Laboratorio\Practica-7\Delay.eep" -m "C:\Micros\uP-uC\Laboratorio\Practica-7\Delay.map" "C:\Micros\uP-uC\Laboratorio\Practica-7\P7.asm"

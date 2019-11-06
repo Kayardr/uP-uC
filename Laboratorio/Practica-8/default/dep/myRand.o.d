@@ -1,0 +1,1 @@
+myRand.o: ../myRand.s

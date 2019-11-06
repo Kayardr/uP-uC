@@ -1,0 +1,57 @@
+;Practica 6
+.INCLUDE "m1280def.inc"
+
+.def divi_pb	= R21
+.def divisor	= R23
+
+.def coscien	= R24
+.def residuo	= R25
+
+.def semilla	= R26
+.def constan	= R27
+.def modulo		= R28
+
+
+ldi		randomn, 0x00
+ldi		semilla, 0x75
+ldi		constan, 0x04
+ldi		modulo, 0xFF
+
+
+;=================================
+;		Aleatorios
+;=================================
+principal:
+	;Hacer el algoritmo
+	out 	PORTA, semilla
+	;Obtener r
+	mul		semilla, constan
+
+	mov		dividen, semilla
+	mov 	divisor, modulo
+	call	div
+	
+	
+	rjmp 	principal
+
+
+;=================================
+;		Divisor y residuo 8 bits
+;=================================
+div:
+	cp		divi_pb, divisor
+	brlo	return
+	sub 	divi_pb, divisor
+	inc 	coscien
+	mov		R1, coscien
+	rjmp	div
+return:
+	mov		R0, divi_pb
+	ret
+
+;=================================
+;		Divisor y residuo 16 bits
+;=================================
+div16:
+	
+	ret

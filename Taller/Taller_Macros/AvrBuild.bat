@@ -1,0 +1,2 @@
+@ECHO OFF
+"C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\avrasm2.exe" -S "C:\Micros\uP-uC\Taller\Taller_Macros\labels.tmp" -fI -W+ie -o "C:\Micros\uP-uC\Taller\Taller_Macros\Macros.hex" -d "C:\Micros\uP-uC\Taller\Taller_Macros\Macros.obj" -e "C:\Micros\uP-uC\Taller\Taller_Macros\Macros.eep" -m "C:\Micros\uP-uC\Taller\Taller_Macros\Macros.map" "C:\Micros\uP-uC\Taller\Taller_Macros\MACRO.asm"
