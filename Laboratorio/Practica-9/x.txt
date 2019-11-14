@@ -1,0 +1,23 @@
+Funcion tipo matrix
+Ciclo inicial
+de 33 al 126 segun ascii
+
+La cantidad de caracteres posibles depende del tamaño de la pantalla
+
+Se recomienda usar el maximo Baud Rate (1M)
+Tiene que exixstir un delay para que los stop bits se vuelvan xd
+
+Es necesario el GotoXY, delay y color
+
+Bajar el tono del color ediante gradientes
+Una vez que llega al limite la gota "Muere" (el color amarillo)
+**Hacer una animacion unica y luego implementar varias lineas**
+Se genera una cantidad de x cadenas de caracteres en una posicion xy aleatoria
+En este ejemplo la cola deberia ser mayor a 64 datos 
+
+Volatile es que el dato no se puede borrar. Evita la optimizacion
+
+
+//
+trustzone arm
+cripto engines arm
