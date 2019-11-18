@@ -99,7 +99,7 @@ void UART0_gets(char *str){
 				str--;
 			}
 			else
-                UART0_puts("\033[1C");
+				UART_putchar(' ');
 		}
 		else if(str >= aux+20-1){
 			UART_putchar(8);
