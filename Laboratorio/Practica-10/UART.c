@@ -11,16 +11,20 @@ uint8_t UART_avalaible(){
     return(!BUFFER_FULL(RX));
 }
 
-void UART_Init(uint8_t com, uint16_t baudrate, uint8_t size, uint8_t parity, uint8_t stop){
+void UART_Init(uint8_t com, uint32_t baudrate, uint8_t size, uint8_t parity, uint8_t stop, uint8_t U2X){
     //REGISTROS UART
-    uint8_t* UCSRA = (uint8_t*)0xC0;
+    uint8_t* UCSRA = (uint8_t*)0xC0 + (8 * com);
     //Configuracion de UBRR
-    uint16_t UBRR = (FOSC / 16 / baudrate) - 1;
-    *(UCSRA + 5) = 0;
+    uint16_t UBRR;
+    if(U2X==0)
+        UBRR = (FOSC / 16 / baudrate) - 1;
+    else
+        UBRR = (FOSC / 8 / baudrate) - 1;
+    *(UCSRA + 5) = (uint8_t)(UBRR>>8);
     *(UCSRA + 4) = (uint8_t)UBRR;
     
-
-    *(UCSRA + 1) |= (1<<RXEN0) | (1<<TXEN0) | (1<<RXCIE0) | (1<<UDRIE0);
+    *(UCSRA) |= (U2X << U2X0);
+    *(UCSRA + 1) |= 0xB8;
     //COnfiguracion del tamanio
     switch(size){
         case 5 : *(UCSRA + 2) &= ~(0b11 << UCSZ00);
@@ -31,15 +35,21 @@ void UART_Init(uint8_t com, uint16_t baudrate, uint8_t size, uint8_t parity, uin
             break;
         case 8 : *(UCSRA + 2) |= (0b11 << UCSZ00);
             break;
+        case 9 : *(UCSRA + 2) |= (0b11 << UCSZ00);
+                *(UCSRA + 1) |= (0b01 << UCSZ02);
+            break;
         default :
             break;
     }
     //Configuracion de UCSRnC (Paridad)
     switch (parity){
-    case 1 : *(UCSRA + 2) |= (0b11 << UPM00);
+    case 0 : *(UCSRA + 2) &= ~(0b11 << UPM00);
+        break;
+    case 1 : *(UCSRA + 2) |= (0b01 << UPM00);
         break;
     case 2 : *(UCSRA + 2) |= (0b10 << UPM00);
         break;
+    case 3 : *(UCSRA + 2) |= (0b11 << UPM00);
     default:
         break;
     }
@@ -51,19 +61,11 @@ void UART_Init(uint8_t com, uint16_t baudrate, uint8_t size, uint8_t parity, uin
     default:
         break;
     }
-    
-    //Configuracion de UCSRnB (Habilitar interrupciones)
-    
-
-    //*(UCSRA + 5) = 0;
-    //*(UCSRA) &= ~(0b1 << U2X0); 
-    
 
     RX.in_idx = 0;
     RX.out_idx = 0;
     TX.in_idx = 0;
     TX.out_idx = 0;
-    
 }
 
 void UART_putchar(char data){
@@ -151,12 +153,14 @@ void setColor(uint8_t color){
 }
 
 void gotoxy(uint8_t x, uint8_t y){
+    char aux[4];
     UART0_puts("\033[");
-    UART_putchar(y/10 + '0');
-    UART_putchar(y%10 + '0');
+    UART0_itoa(aux, y, 10);
+    UART0_puts(aux);
     UART_putchar(';');
-    UART_putchar(x/10 + '0');
-    UART_putchar(x%10 + '0');
+
+    UART0_itoa(aux, x, 10);
+    UART0_puts(aux);
     UART_putchar('H');
 }
 

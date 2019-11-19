@@ -27,7 +27,7 @@
     extern ring_buffer_t TX;*/
 
     uint8_t UART_avalaible();
-    void UART_Init(uint8_t com, uint16_t baudrate, uint8_t size, uint8_t parity, uint8_t stop);
+    void UART_Init(uint8_t com, uint32_t baudrate, uint8_t size, uint8_t parity, uint8_t stop, uint8_t U2X);
     void UART_putchar(char data);
     char UART0_getchar(void);
 
