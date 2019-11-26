@@ -4,7 +4,7 @@
 
 ## General Flags
 PROJECT = P10
-MCU = atmega1280
+MCU = atmega2560
 TARGET = P10.elf
 CC = avr-gcc.exe
 
@@ -35,7 +35,7 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = Timer0.o UART.o P10b.o 
+OBJECTS = P10.o UART.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
@@ -44,13 +44,10 @@ LINKONLYOBJECTS =
 all: $(TARGET) P10.hex P10.eep P10.lss size
 
 ## Compile
-Timer0.o: ../Timer0.c
+P10.o: ../P10.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 UART.o: ../UART.c
-	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
-
-P10b.o: ../P10b.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
