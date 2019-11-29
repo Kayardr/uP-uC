@@ -20,18 +20,17 @@ int main(){
     Timer2_Ini();
     while(1){ /* == main loop == */
         if( Timer0_SecFlag() ){ /* ¿ha pasado 1 Segundo? */
-            
+            gotoxy(0,0);
+            setColor(97);
         /* instrucciones para encender LED */
             UART0_puts("1 segundo\n\r");
-        /* instrucciones para apagar LED */
-            //ClrBitPort(PORTF, 0);
+        /* instrucciones para apagar LED */ 
         }
-        if( Timer0_SecFlag2()){
-            SetBitPort(PORTF, 0);
+        if( Timer2_SecFlag()){
+            
             gotoxy(10,4);
             setColor(32);
             UART0_puts("1 segundo");
-            ClrBitPort(PORTF, 0);
         }
     }
     return 0;

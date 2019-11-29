@@ -35,7 +35,7 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = Timer0.o UART.o P10b.o 
+OBJECTS = Timer0.o UART.o Timer2.o P10.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
@@ -50,7 +50,10 @@ Timer0.o: ../Timer0.c
 UART.o: ../UART.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-P10b.o: ../P10b.c
+Timer2.o: ../Timer2.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+P10.o: ../P10.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
