@@ -1,4 +1,4 @@
-#include "UART0.h"
+#include "UART.h"
 #include "Timer.h"
 
 const struct note ImperialMarch[]={
@@ -98,14 +98,13 @@ const struct note ImperialMarch[]={
 
 int main(void)
 {
-	UART0_Ini();
-	UART0_AutoBaudRate();
-	
+	UART_Init(0, 250000,8, 1, 2, 0);
+	UART_AutoBaudRate();
 	Timer0_Ini();
     
 	while(1){
-		if (UART0_available()){
-			switch (UART_getchar()){
+		if (UART_avalaible()){
+			switch (UART0_getchar()){
 			case 'p':
 			case 'P': // Play Song
 					Timer2_Play(ImperialMarch,sizeof(ImperialMarch)/sizeof(struct note));

@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "interrupt.h": "c",
+        "io.h": "c",
+        "sfr_defs.h": "c",
+        "iom2560.h": "c",
+        "iomxx0_1.h": "c",
+        "timer.h": "c"
+    }
+}

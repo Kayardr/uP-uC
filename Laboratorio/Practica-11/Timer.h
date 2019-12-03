@@ -1,6 +1,5 @@
 #ifndef _TIMER_H
 #define _TIMER_H
-
 #define c 	261
 #define d 	294
 #define e 	329
@@ -26,6 +25,14 @@
 
 #define TEMPO	500
 #define SILENCE 10
+
+/*Mis definiciones*/
+#define CLOCKA 	16E6
+#define CLOCKB	32768
+#define PRESCALER 	129
+
+#define TOP_V(clock, prescaler, ms) (((clock / (2 * prescaler)) / (ms * 1000)) - 1)
+#define PWM_freq(clk, v, p) 	(clk * v)/p
 
 struct note{
 	uint16_t freq;
