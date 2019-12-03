@@ -99,14 +99,15 @@ const struct note ImperialMarch[]={
 int main(void)
 {
 	UART_Init(0, 250000,8, 1, 2, 0);
-	UART_AutoBaudRate();
+	//UART_AutoBaudRate();
 	Timer0_Ini();
-    
+    UART0_puts("No ha iniciado la cancion");
 	while(1){
 		if (UART_avalaible()){
 			switch (UART0_getchar()){
 			case 'p':
 			case 'P': // Play Song
+					UART0_puts("Ha iniciado la cancion");
 					Timer2_Play(ImperialMarch,sizeof(ImperialMarch)/sizeof(struct note));
 					break;
 			case 'V': //Increase Volume

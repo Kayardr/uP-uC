@@ -1,4 +1,4 @@
-#include <avr/interrupt.h>
+﻿#include <avr/interrupt.h>
 #include <avr/io.h>
 #include "Timer.h"
 #define P 1024
@@ -11,6 +11,8 @@ volatile struct note* song_ptr;
 volatile uint16_t n_nota;
 volatile uint16_t m_nota;
 volatile uint8_t delay_f;
+volatile uint8_t ms_delay;
+volatile uint8_t cambio;
 
 void Timer0_Ini ( void ){
 	/* 	Permanece igual, ocasionando una interrupción 
@@ -25,21 +27,24 @@ void Timer0_Ini ( void ){
 
 ISR(TIMER0_COMPA_vect){ 
 	ms++;
+	ms_delay;
 	/* 	Código para actualizar bandera de segundos */
 	if(!(ms%1000))
 		secF = 1;
 	/*	Agregar las instrucciones necesarias para reproducir
 		la siguiente nota en el arreglo dependiendo de la duración, 
 		e insertar los silencios entre cada nota. */
-	if((ms % song_ptr[n_nota].delay) && delay_f == 1){
-		if(song_ptr[n_nota].freq > 1)
+	if((ms_delay >= song_ptr[n_nota].delay) && delay_f == 1){
+		if(song_ptr[n_nota].freq > 1 && cambio)
 			Timer2_Freq_Gen(TICKS(song_ptr[n_nota].freq));
 		else
 			Timer2_Freq_Gen(0);
 		n_nota++;
 		delay_f = 0;
+		cambio = 0;
 	}else{
 		delay_f = 1;
+		cambio = 1;
 		Timer2_Freq_Gen(0);
 	}
 	
@@ -52,19 +57,16 @@ void Timer2_Freq_Gen(uint8_t ticks){
 		esta forma el silencio (0 lógico). */
 	if(ticks && (volume > 0)){
 		/*Deshabilitar interrupciones*/
-		TIMSK2 = 0;
-		/*Seleccion del reloj fuente*/
-		ASSR &= (0 << AS2);
 		/*Nuevos valores de TCNT2 y TCCR2A, TCCR2B(Modo de operacion)*/
 		TCNT2 = 0;
 		TCCR2A |= (0b11 << WGM20);
-		TCCR2B |= (0b1 << WGM22) | (0b111 << CS20);
+		TCCR2B |= (1 << WGM22) | (0b111 << CS20);
 		/*Asignar #_Ticks en OCR2A*/
 		OCR2A = ticks - 1;
 		/*Asignar frecuencia a OCR2B*/
 		OCR2B = PWM_freq(OCR2A, volume, PRESCALER);
 	}else
-		OCR2B = 0;
+		TCCR2B = 0;
 }
 
 void Timer2_Play(const struct note song[], unsigned int len){
