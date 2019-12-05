@@ -2,11 +2,13 @@
 #include <avr/interrupt.h>
 #include "UART.h"
  
-ring_buffer_t RX;   //Buffer de entrada
-ring_buffer_t TX;   //Buffer de salida
+
 
 //USART0_RX_vect en iomx0.h (Arduino)
-
+void InitPorts(void){
+	DDRF  = 0b00000001;
+  	PORTF = 0b00000001;
+}
 uint8_t UART_avalaible(){
     return(!BUFFER_FULL(RX));
 }

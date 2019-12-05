@@ -10,7 +10,7 @@ P10.o: ../P10.c c:/winavr-20071221/bin/../avr/include/avr/io.h \
   c:/winavr-20071221/bin/../avr/include/avr/fuse.h \
   c:/winavr-20071221/bin/../avr/include/avr/lock.h \
   c:/winavr-20071221/bin/../avr/include/avr/interrupt.h ../UART.h \
-  ../Timer0.h
+  ../Timer0.h ../Timer2.h
 
 c:/winavr-20071221/bin/../avr/include/avr/io.h:
 
@@ -39,3 +39,5 @@ c:/winavr-20071221/bin/../avr/include/avr/interrupt.h:
 ../UART.h:
 
 ../Timer0.h:
+
+../Timer2.h:

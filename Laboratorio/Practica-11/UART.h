@@ -25,6 +25,10 @@
     //Buffers (Recepcion y Transmision)
     /*extern ring_buffer_t RX;
     extern ring_buffer_t TX;*/
+    ring_buffer_t RX;   //Buffer de entrada
+    ring_buffer_t TX;   //Buffer de salida
+
+    void InitPorts(void);
 
     uint8_t UART_avalaible();
     void UART_Init(uint8_t com, uint32_t baudrate, uint8_t size, uint8_t parity, uint8_t stop, uint8_t U2X);

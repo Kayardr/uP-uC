@@ -100,15 +100,18 @@ int main(void)
 {
 	UART_Init(0, 250000,8, 1, 2, 0);
 	//UART_AutoBaudRate();
+	InitPorts();
 	Timer0_Ini();
     UART0_puts("No ha iniciado la cancion");
+	char p = 'p';
 	while(1){
-		if (UART_avalaible()){
-			switch (UART0_getchar()){
+		if (UART_avalaible()){ 
+			switch (p){//Devolver esto a la normalidad
 			case 'p':
 			case 'P': // Play Song
 					UART0_puts("Ha iniciado la cancion");
 					Timer2_Play(ImperialMarch,sizeof(ImperialMarch)/sizeof(struct note));
+					p = 0;
 					break;
 			case 'V': //Increase Volume
 					Timer2_Volume(1);

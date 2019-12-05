@@ -31,7 +31,7 @@
 #define CLOCKB	32768
 #define PRESCALER 	129
 
-#define TOP_V(clock, prescaler, ms) (((clock / (2 * prescaler)) / (ms * 1000)) - 1)
+#define TOP_V(clock, prescaler, ms) (((clock / (prescaler)) / (ms * 1000)) - 1)
 #define PWM_freq(clk, v, p) 	(clk * v)/p
 
 struct note{
@@ -42,6 +42,6 @@ struct note{
 void Timer0_Ini ( void );
 void Timer2_Freq_Gen(uint8_t ticks);
 void Timer2_Play(const struct note song[],unsigned int len);
-void Timer2_Volume(int8_t direction);
+void Timer2_Volume(uint8_t direction);
 
 #endif

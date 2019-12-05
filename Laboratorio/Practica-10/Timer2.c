@@ -4,7 +4,6 @@
 static volatile uint8_t n_value;
 static volatile uint8_t SecFlag2;
 static volatile uint32_t mSecCnt2;
-
 void Timer2_Ini ( void ){
     /*Seleccion del preescalador y valor a almacenar en OCR2A*/
     TCCR2B |= (0b111 << CS20);
@@ -33,13 +32,13 @@ uint8_t Timer2_SecFlag( void ){
         return 0;
     }
 }
-
+/*
 ISR(TIMER2_OVF_vect){
     TCNT2 = n_value;
     SecFlag2 = 1;
-}
+}*/
 
 ISR(TIMER2_COMPA_vect){
-    TCNT2 = n_value;
+    TCNT2 = 0;
     SecFlag2 = 1;
 }

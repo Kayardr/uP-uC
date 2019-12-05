@@ -9,7 +9,7 @@ Timer.o: ../Timer.c c:/winavr-20071221/bin/../avr/include/avr/interrupt.h \
   c:/winavr-20071221/bin/../avr/include/avr/common.h \
   c:/winavr-20071221/bin/../avr/include/avr/version.h \
   c:/winavr-20071221/bin/../avr/include/avr/fuse.h \
-  c:/winavr-20071221/bin/../avr/include/avr/lock.h ../Timer.h
+  c:/winavr-20071221/bin/../avr/include/avr/lock.h ../Timer.h ../UART.h
 
 c:/winavr-20071221/bin/../avr/include/avr/interrupt.h:
 
@@ -36,3 +36,5 @@ c:/winavr-20071221/bin/../avr/include/avr/fuse.h:
 c:/winavr-20071221/bin/../avr/include/avr/lock.h:
 
 ../Timer.h:
+
+../UART.h:
