@@ -2,13 +2,14 @@
 #include <avr/io.h>
 #include "Timer.h"
 #include "UART.h"
+#include <avr/pgmspace.h>
 #define P 1024
-#define TICKS(f) 16E6/P/f
+#define TICKS(f) (16E6/P)/f
 
 static volatile uint32_t ms;			//Contador de milisegundos
 static volatile uint8_t secF;			//Bandera de segundos
-volatile uint8_t volume;
-volatile struct note* song_ptr;
+PGM_P song_ptr;							//Variable que apunta a la direccion de la cancion actual
+										//La cancion se encuentra en memoria
 volatile uint16_t n_note;				//Indice de la nota actual
 volatile uint16_t m_note;				//Maximo rango de notas
 
@@ -44,20 +45,22 @@ ISR(TIMER0_COMPA_vect){
 		ClrBitPort(PORTF, 0);
 		ms_delay = 0;		//Se establece el contador de tiempo de delay a 0
 		/*Comprobar si el silencio entre notas ha terminado*/
-		if(new_note_f){		//Si ya ha terminado entonces cargar la nueva nota
+		if(new_note_f && pgm_read_word(song_ptr + n_note) != END){		//Si ya ha terminado entonces cargar la nueva nota
 			/*Generar la frecuencia de la nota*/
 			
-			Timer2_Freq_Gen(TICKS(song_ptr[n_note].freq));
-			current_delay = song_ptr[n_note].delay;		//Se establece el nuveo delay de la nota
+			Timer2_Freq_Gen(TICKS(pgm_read_word(song_ptr + n_note)));
+			current_delay = pgm_read_word(song_ptr + n_note + 2);		//Se establece el nuveo delay de la nota
 			new_note_f = 0;		//La bandera de nueva nota es desactivada
-			n_note++; 			//Se incrementa el indice de la nota
-		}else{				//Si hay silencio entonces...
+			n_note += 4; 			//Se incrementa el indice de la nota
+		}else if(pgm_read_word(song_ptr + n_note)!=END){				//Si hay silencio entonces...
 			
 			new_note_f = 1;		//Activar la bandera de nueva nota
 			current_delay = SILENCE;	//Indicar que hay un delay de 10 ms entre notas
 			Timer2_Freq_Gen(0);			//Se manda silencio
 			SetBitPort(PORTF, 0);
 		}
+		else
+			Timer2_Play(song_ptr, 0);
 	}
 	
 }
@@ -81,15 +84,15 @@ void Timer2_Freq_Gen(uint8_t ticks){
 		TCCR2B = 0;
 }
 
-void Timer2_Play(const struct note song[], unsigned int len){
+void Timer2_Play(PGM_P song, unsigned int len){
 	/*	Función que establece las condiciones necesarias para que
 		el generador recorra el arreglo de notas. */
 	song_ptr = song;
 	
 	n_note = 0;
-	current_delay = song_ptr[n_note].delay;
-	m_note = len;
-	volume = 128;
+	current_delay = pgm_read_word(song_ptr + 2);	//Se lee el primer delay almacenado en memoria
+	m_note = len;	//Esto en realidad es inserbible, un poco
+	volume = 64;
 	DDRH |= (1 << DDH6);
 }
 
@@ -99,7 +102,7 @@ void Timer2_Volume(uint8_t direction){
 	if(direction == 1){
 		volume++;
 		volume %= 128;
-	}else if(direction == -1){
+	}else if(direction == 0){
 		if(volume>0)
 			volume--;
 		else
